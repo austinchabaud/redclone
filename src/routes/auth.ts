@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-
+import { validate } from 'class-validator';
 import { User } from '../entities/User';
 
 const register = async (req: Request, res: Response) => {
@@ -7,10 +7,23 @@ const register = async (req: Request, res: Response) => {
 
 	try {
 		// Validate data
+		let errors: any = {};
+		const emailUser = await User.findOne({ email });
+		const usernameUser = await User.findOne({ username });
+
+		if (emailUser) errors.email = 'Email is already taken';
+		if (usernameUser) errors.email = 'Username is already taken';
+
+		if (Object.keys(errors).length > 0) {
+			return res.status(400).json(errors);
+		}
 
 		// Create User
 		const user = new User({ email, username, password });
 		await user.save();
+
+		errors = await validate(user);
+		if (errors.length > 0) return res.status(400).json({ errors });
 
 		// Return User
 		return res.json(user);
