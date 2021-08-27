@@ -5,7 +5,7 @@
 	"username": "austinchabaud",
 	"password": "root",
 	"database": "redclone",
-	"synchronize": true,
+	"synchronize": false,
 	"logging": true,
 	"entities": ["src/entities/**/*.ts"],
 	"migrations": ["src/migrations/**/*.ts"],
