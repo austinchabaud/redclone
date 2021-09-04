@@ -6,8 +6,7 @@ import { useRouter } from 'next/router';
 
 import InputGroup from '../components/InputGroup';
 
-export default function Register() {
-	const [email, setEmail] = useState('');
+export default function Login() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [errors, setErrors] = useState<any>({});
@@ -18,13 +17,12 @@ export default function Register() {
 		event.preventDefault();
 
 		try {
-			await Axios.post('/auth/register', {
-				email,
+			await Axios.post('/auth/login', {
 				password,
 				username,
 			});
 
-			router.push('/login');
+			router.push('/');
 		} catch (err) {
 			setErrors(err.response.data);
 		}
@@ -33,7 +31,7 @@ export default function Register() {
 	return (
 		<div className='flex'>
 			<Head>
-				<title>Register</title>
+				<title>Login</title>
 			</Head>
 
 			<div
@@ -42,19 +40,11 @@ export default function Register() {
 			></div>
 			<div className='flex flex-col justify-center pl-6'>
 				<div className='w-70'>
-					<h1 className='mb-2 text-lg font-medium'> Sign Up</h1>
+					<h1 className='mb-2 text-lg font-medium'> Login</h1>
 					<p className='mb-10 text-xs '>
 						By continuing, you agree to our User Agreement and Privacy Policy.
 					</p>
 					<form onSubmit={submitForm}>
-						<InputGroup
-							className='mb-2'
-							type='email'
-							value={email}
-							setValue={setEmail}
-							placeholder='EMAIL'
-							error={errors.email}
-						/>
 						<InputGroup
 							className='mb-2'
 							type='text'
@@ -73,13 +63,13 @@ export default function Register() {
 						/>
 
 						<button className='w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border border-blue-500 rounded '>
-							Sign Up
+							Login
 						</button>
 					</form>
 					<small>
-						Already a Readitor?
-						<Link href='/login'>
-							<a className='ml-1 text-blue-500 uppercase'>Login</a>
+						New to a Readit?
+						<Link href='/register'>
+							<a className='ml-1 text-blue-500 uppercase'>Sign Up</a>
 						</Link>
 					</small>
 				</div>
